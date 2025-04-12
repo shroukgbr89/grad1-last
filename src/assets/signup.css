@@ -1,0 +1,115 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+} */
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  max-width: 1200px;
+}
+
+.form-container {
+  width: 50%;
+  background-color: white;
+  padding: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+p {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #4f94db;
+  transition: 1s all;
+}
+
+button {
+  padding: 12px;
+  background-color: #4f94db;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #357ab7;
+}
+
+.image-container {
+  width: 50%;
+}
+
+.doctor-icon {
+  width: 105%;
+  height: 75vh;
+  display: block;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  margin: 0 auto;
+}
+
+.doctor-icon:hover {
+  transition: 1s all;
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+.form-container p {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+a {
+  color: #48a5e0;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=Signup.css.map */

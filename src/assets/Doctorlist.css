@@ -1,0 +1,199 @@
+/* Doctorlist.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8ff;
+  color: #444;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #6BC2E5;
+  color: white;
+}
+
+.header .icon {
+  width: 30px;
+  margin-left: 1rem;
+}
+
+
+.profile-edit .profile-pic img, 
+.add-doctor .profile-pic img {
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.profile-edit form, 
+.add-doctor form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.profile-edit form label, 
+.add-doctor form label {
+  font-weight: bold;
+}
+
+.profile-edit form .row, 
+.add-doctor form .row {
+  display: flex;
+  gap: 15px;
+}
+
+.profile-edit form input, 
+.add-doctor form input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-edit form .save-btn, 
+.add-doctor form .save-btn {
+  width: 100px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.profile-edit form button, 
+.add-doctor form button {
+  grid-column: span 2;
+  padding: 0.5rem 1rem;
+  background-color: #6BC2E5;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-edit form button:hover, 
+.add-doctor form button:hover {
+  background-color: #5aace2;
+}
+
+.doctor-list .controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.doctor-list .controls .btn-all, 
+.doctor-list .controls .btn-add {
+  padding: 0.5rem 1rem;
+  background-color: #6BC2E5;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.doctor-list .controls .btn-all:hover, 
+.doctor-list .controls .btn-add:hover {
+  background-color: #5aace2;
+}
+
+.doctor-list .controls input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 2%;
+}
+
+.doctor-list .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.doctor-list .cards .card {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+}
+
+.doctor-list .cards .card img {
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.doctor-list .cards .card h2 {
+  font-size: 24px;  
+  font-weight: bold;  
+  color: #1d58ab;  
+  margin-bottom: 10px;  
+}
+
+.doctor-list .cards .card h5 {
+  font-size: 18px;  
+  color: brown;  
+  margin-bottom: 5px;  
+  font-weight: 500; 
+}
+
+.doctor-list .cards .card p {
+  color: #666;
+  line-height: 1.5;
+}
+
+.doctor-list .cards .card .actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px; 
+}
+
+.doctor-list .cards .card .actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.doctor-list .cards .card .actions button.edit {
+  background-color: #6BC2E5;
+  color: white;
+}
+
+.doctor-list .cards .card .actions button.edit:hover {
+  background-color: #5aace2;
+}
+
+.doctor-list .cards .card .actions button.delete {
+  background-color: red;
+  color: white;
+}
+
+.doctor-list .cards .card .actions button.delete:hover {
+  background-color: darkred;
+}
+
+.actions button.view-profile {
+  background-color: transparent;
+  padding: 8px;
+}
+
+.actions button.view-profile:hover {
+  background-color: rgba(107, 194, 229, 0.1);
+}
+
