@@ -13,7 +13,10 @@ import ListAppointment from './Pages/ListAppointment';
 import Login from './Pages/Login';
 import Prescribe from './Pages/Prescribe';
 import Signup from './Pages/Signup'; 
-import Profile from './Pages/Profile'; // Import the Profile component
+import Profile from './Pages/Profile'; 
+import PatientReminders from './Pages/PatientReminders'; // 
+import ReminderForm from './Pages/ReminderForm'; // 
+
 
 // Error boundary component to catch and display errors
 class ErrorBoundary extends React.Component {
@@ -102,6 +105,14 @@ function MainRouter() {
           path: 'Edit/:doctorId', // Add :doctorId to make the route dynamic
           element: <Edit />,
         },
+        {
+          path: 'patient/:patientId/reminders/new',
+          element: <ReminderForm />,
+        },
+        {
+          path: 'patient/:patientId/reminders',
+          element: <PatientReminders doctorId={doctorId} />,
+        }
         // // Add Drugs page route
         // {
         //   path: 'Drugs',
