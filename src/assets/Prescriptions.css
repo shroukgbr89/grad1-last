@@ -1,0 +1,121 @@
+/* Prescriptions.css */
+
+.prescriptions-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.prescriptions-container h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.prescriptions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.prescriptions-table thead {
+  background-color: #3498db;
+  color: white;
+}
+
+.prescriptions-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.prescriptions-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #555;
+}
+
+.prescriptions-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+.prescribe-button {
+  background-color: brown;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.prescribe-button:hover {
+  background-color: #219653;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.prescribe-button:active {
+  transform: translateY(0);
+}
+
+/* Loading state */
+.prescriptions-container p {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+/* No patients found */
+.prescriptions-table td[colspan] {
+  text-align: center;
+  color: #7f8c8d;
+  padding: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .prescriptions-container {
+    padding: 15px;
+    margin: 15px;
+  }
+  
+  .prescriptions-table th,
+  .prescriptions-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .prescribe-button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .prescriptions-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .prescriptions-container h2 {
+    font-size: 24px;
+  }
+}

@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { collection, query, where, getDocs, getFirestore, deleteDoc, doc } from 'firebase/firestore';
 import { app } from '../config/firebase';
 import '../assets/ListAppointment.css';
+import { useNavigate } from 'react-router-dom';
 
 const ListAppointment = ({ doctorId }) => {
   const [appointments, setAppointments] = useState([]);
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const navigate = useNavigate();
 
   const handlePrescribe = (appointment) => {
-    // Example: Save selected patient data and redirect to a prescribe page
-    localStorage.setItem('selectedPatient', JSON.stringify(appointment));
-    window.location.href = '/prescribe'; // assuming you have a route for it
+    navigate('/prescribe', { state: { patientData: appointment } });
   };
-  
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
     setLoggedInUser(userData);
@@ -75,58 +75,66 @@ const ListAppointment = ({ doctorId }) => {
   };
 
   if (loading) {
-    return <p>Loading appointments...</p>;
-  }
-
-  if (appointments.length === 0 && !loggedInUser?.admin) {
-    return <h2 style={{ color: 'red' }}>No appointments found for this doctor.</h2>;
+    return <div className="loading">Loading appointments...</div>;
   }
 
   return (
     <div className="appointments-container">
       {loggedInUser?.admin ? (
         <div className="doctor-details">
-          <h2  className="greeting">Hello, Admin ALL Appointments</h2>
-          {/* <p><strong>Specialization:</strong> Monitor</p> */}
+          <h2 className="greeting">Hello, Admin - All Appointments</h2>
         </div>
       ) : (
         <div className="doctor-details">
-        <h2 className="greeting">
-          Hello Dr. {doctorDetails?.doctorName || 'N/A'}, Your Appointments
-        </h2>
-{/* <p><strong>Specialization:</strong> {doctorDetails?.specialization || 'N/A'}</p> */}
+          <h2 className="greeting">
+            Hello Dr. {doctorDetails?.doctorName || 'N/A'}, Your Appointments
+          </h2>
         </div>
       )}
-      <table className="appointments-table">
-        <thead>
-          <tr>
-            <th>Patient Name</th>
-            <th>Time</th>
-            <th>Day</th>
-            <th>Patient Phone</th>
-            <th>Doctor Name</th>
-            <th>Actions</th>
-            <th>Drugs</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((appointment) => (
-            <tr key={appointment.id}>
-              <td>{appointment.patientName}</td>
-              <td>{appointment.time}</td>
-              <td>{appointment.day}</td>
-              <td>{appointment.patientPhone}</td>
-              <td>{appointment.doctorName || 'N/A'}</td>
-              <td>
-                <button className="cancel-button" onClick={() => handleCancel(appointment.id)}>Cancel</button>
-              </td>
-              <td>
-              <button className="prescribe-button" onClick={() => handlePrescribe(appointment)}>Prescribe</button>
-              </td>
+      
+      {appointments.length === 0 ? (
+        <div className="no-appointments">No appointments found</div>
+      ) : (
+        <table className="appointments-table">
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Time</th>
+              <th>Day</th>
+              <th>Patient Phone</th>
+              <th>Doctor Name</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {appointments.map((appointment) => (
+              <tr key={appointment.id}>
+                <td>{appointment.patientName}</td>
+                <td>{appointment.time}</td>
+                <td>{appointment.day}</td>
+                <td>{appointment.patientPhone}</td>
+                <td>{appointment.doctorName || 'N/A'}</td>
+                <td>{appointment.status || 'Scheduled'}</td>
+                <td className="actions">
+                  <button 
+                    className="cancel-button" 
+                    onClick={() => handleCancel(appointment.id)}
+                  >
+                    Cancel
+                  </button>
+                  {/* <button 
+                    className="prescribe-button" 
+                    onClick={() => handlePrescribe(appointment)}
+                  >
+                    Prescribe
+                  </button> */}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

@@ -1,22 +1,23 @@
-import React, { useState } from 'react'; 
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Homepage from './Pages/Homepage';
-import DoctorList from './Pages/DoctorList';
-import './assets/HomePage.css';
-import Addnewdoctor from './Pages/Addnewdoctor';
-import Edit from './Pages/Edit';
-import ListAppointment from './Pages/ListAppointment';
-import Login from './Pages/Login';
-import Prescribe from './Pages/Prescribe';
-import Signup from './Pages/Signup'; 
-import Profile from './Pages/Profile'; 
-import PatientReminders from './Pages/PatientReminders'; // 
-import ReminderForm from './Pages/ReminderForm'; // 
-
+import React, { useState } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Homepage from "./Pages/Homepage";
+import DoctorList from "./Pages/DoctorList";
+import "./assets/HomePage.css";
+import Addnewdoctor from "./Pages/Addnewdoctor";
+import Edit from "./Pages/Edit";
+import ListAppointment from "./Pages/ListAppointment";
+import Login from "./Pages/Login";
+import Prescribe from "./Pages/Prescribe";
+import Signup from "./Pages/Signup";
+import Profile from "./Pages/Profile";
+import PatientReminders from "./Pages/PatientReminders";
+import ReminderForm from "./Pages/ReminderForm";
+import Prescriptions from "./Pages/Prescriptions";
+import Histories from "./Pages/Histories"; // Import the new page
 
 // Error boundary component to catch and display errors
 class ErrorBoundary extends React.Component {
@@ -30,7 +31,7 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
-    console.log('Error caught in ErrorBoundary: ', error, info);
+    console.log("Error caught in ErrorBoundary: ", error, info);
   }
 
   render() {
@@ -42,19 +43,23 @@ class ErrorBoundary extends React.Component {
 }
 
 function MainRouter() {
-  const [doctorEmail, setDoctorEmail] = useState(localStorage.getItem('doctorEmail') || null);
-  const [doctorId, setDoctorId] = useState(localStorage.getItem('doctorId') || null); // Fetch doctorId from localStorage
+  const [doctorEmail, setDoctorEmail] = useState(
+    localStorage.getItem("doctorEmail") || null
+  );
+  const [doctorId, setDoctorId] = useState(
+    localStorage.getItem("doctorId") || null
+  ); // Fetch doctorId from localStorage
 
   const handleLogin = (email, id) => {
     setDoctorEmail(email);
     setDoctorId(id);
-    localStorage.setItem('doctorEmail', email); // Store email in localStorage
-    localStorage.setItem('doctorId', id); // Store doctorId in localStorage
+    localStorage.setItem("doctorEmail", email); // Store email in localStorage
+    localStorage.setItem("doctorId", id); // Store doctorId in localStorage
   };
 
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: "/",
       element: <App />,
       children: [
         {
@@ -62,57 +67,70 @@ function MainRouter() {
           element: <Homepage />,
         },
         {
-          path: 'Homepage',
+          path: "Homepage",
           element: <Homepage />,
         },
         {
-          path: 'DoctorList',
+          path: "DoctorList",
           element: <DoctorList />,
         },
         {
-          path: 'Add',
+          path: "Add",
           element: <Addnewdoctor />,
         },
         {
-          path: 'Edit',
+          path: "Edit",
           element: <Edit />,
-        },      
+        },
         {
-          path: 'ListAppointment',
-          element: <ListAppointment doctorEmail={doctorEmail} doctorId={doctorId} />,
-        },  
+          path: "ListAppointment",
+          element: (
+            <ListAppointment doctorEmail={doctorEmail} doctorId={doctorId} />
+          ),
+        },
         {
-          path: '/appointments',
-          element: <ListAppointment doctorEmail={doctorEmail} doctorId={doctorId} />,
-        },              
+          path: "/appointments",
+          element: (
+            <ListAppointment doctorEmail={doctorEmail} doctorId={doctorId} />
+          ),
+        },
         {
-          path: 'Login',
+          path: "Login",
           element: <Login onLogin={handleLogin} />,
         },
         {
-          path: 'Signup',
+          path: "Signup",
           element: <Signup />,
         },
         {
-          path: 'prescribe',
+          path: "prescribe",
           element: <Prescribe />,
         },
         {
-            path: 'profile/:doctorId',
-            element: <Profile />,
+          path: "profile/:doctorId",
+          element: <Profile />,
         },
         {
-          path: 'Edit/:doctorId', // Add :doctorId to make the route dynamic
+          path: "Edit/:doctorId", // Add :doctorId to make the route dynamic
           element: <Edit />,
         },
         {
-          path: 'patient/:patientId/reminders/new',
+          path: "patient/:patientId/reminders/new",
           element: <ReminderForm />,
         },
         {
-          path: 'patient/:patientId/reminders',
+          path: "patient/:patientId/reminders",
           element: <PatientReminders doctorId={doctorId} />,
-        }
+        },
+        {
+          path: "prescriptions", // New route for prescriptions
+          element: <Prescriptions />,
+        },
+        {
+            path: "histories",
+            element: <Histories />,
+          }
+
         // // Add Drugs page route
         // {
         //   path: 'Drugs',
@@ -129,5 +147,5 @@ function MainRouter() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<MainRouter />); // Render the MainRouter component

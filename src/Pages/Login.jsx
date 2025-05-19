@@ -11,6 +11,7 @@ const LoginPage = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState({ text: '', type: '' });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -20,6 +21,7 @@ const LoginPage = ({ onLogin }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setMessage({ text: '', type: '' });
+    setIsLoading(true);
   
     try {
       const db = getFirestore(app);
@@ -32,18 +34,16 @@ const LoginPage = ({ onLogin }) => {
         const userData = userDoc.data();
   
         if (userData.password === password) {
-          setMessage({ text: 'Login successful!', type: 'success' });
           const isAdmin = email === 'admin@gmail.com' && password === 'adminuser123';
           const userWithAdminFlag = { ...userData, admin: isAdmin };
   
-          localStorage.setItem('userData', JSON.stringify(userWithAdminFlag)); // Store user data
+          localStorage.setItem('userData', JSON.stringify(userWithAdminFlag));
+          localStorage.setItem('doctorId', userDoc.id);
+          localStorage.setItem('doctorEmail', email);
           onLogin(email, userDoc.id);
   
-          if (isAdmin) {
-            setTimeout(() => navigate('/homepage'), 1000);
-          } else {
-            setTimeout(() => navigate('/appointments'), 1000);
-          }
+          // Immediate navigation after successful login
+          navigate(isAdmin ? '/DoctorList' : '/appointments');
         } else {
           setMessage({ text: 'Invalid password. Please try again.', type: 'error' });
         }
@@ -52,8 +52,10 @@ const LoginPage = ({ onLogin }) => {
       }
     } catch (error) {
       console.error('Error during login:', error);
-      setMessage({ text: 'An error occurred during login. Please try again.', type: 'error' });
-  }
+      setMessage({ text: 'An error occurred during login. Please try again.', type: 'error' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -96,10 +98,12 @@ const LoginPage = ({ onLogin }) => {
             </p>
           )}
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
         <p className="signup-text">
-          Don’t have an account? <Link to="/signup">Sign Up</Link>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </div>
 
@@ -111,4 +115,4 @@ const LoginPage = ({ onLogin }) => {
   );
 };
 
-export default LoginPage;
+export default LoginPage;

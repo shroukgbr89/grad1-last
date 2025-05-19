@@ -8,6 +8,7 @@ export default function Navbar() {
   const userData = JSON.parse(localStorage.getItem('userData')) || {};
   const isAdmin = userData?.admin; // Check if the user is an admin
   const doctorId = localStorage.getItem('doctorId'); // Check if the user is a doctor
+  const isLoggedIn = !!localStorage.getItem('token'); // Check if user is logged in
 
   return (
     <>
@@ -17,42 +18,63 @@ export default function Navbar() {
           <span className="brand-name">Health Care</span>
         </div>
         <div className="nav-links">
+          {/* Appointments Dropdown */}
           <div className="dropdown">
-            <Link to="#" className="dropdown-link">Appointment</Link>
-            <div className="dropdown-content">
-              <Link to="/ListAppointment" className="dropdown-item">List Appointment</Link>
-            </div>
-          </div>
+                <Link to="#" className="dropdown-link">Appointments</Link>
+                <div className="dropdown-content">
+                  <Link to="/ListAppointment" className="dropdown-item">List Appointments</Link>
+                  {!isAdmin && (
+                    <Link to="/Prescriptions" className="dropdown-item">Prescriptions</Link>
+                  )}
+        
+                </div>
+              </div>
 
-          {/* Conditionally render the "Doctors" dropdown based on admin status */}
+
+          {/* Doctors Dropdown (Admin only) */}
           {isAdmin && (
             <div className="dropdown">
               <Link to="#" className="dropdown-link">Doctors</Link>
               <div className="dropdown-content">
-                <Link to="/DoctorList" className="dropdown-item">Doctor List View</Link>
+                <Link to="/DoctorList" className="dropdown-item">Doctor List</Link>
                 <Link to="/Add" className="dropdown-item">Add New Doctor</Link>
-                <Link to="/Edit" className="dropdown-item">Edit Profile Doctor</Link>
+                <Link to="/Edit" className="dropdown-item">Edit Doctors</Link>
               </div>
             </div>
           )}
 
-          {/* Render the Profile and Drugs links if doctorId exists */}
+          {/* Profile Link (For Doctors) */}
+      {doctorId && (
+          <Link to="/Histories" className="nav-link">Patient Histories</Link>
+        )}
+
           {doctorId && (
-            <>
-              <Link to={`/profile/${doctorId}`} className="nav-link" style={{ marginLeft: '8px' }}>
-                My Profile
-              </Link>
-              {/* <Link to="/Drugs" className="nav-link" style={{ marginLeft: '8px' }}>
-                Drugs
-              </Link> */}
-            </>
+            <Link to={`/profile/${doctorId}`} className="nav-link">My Profile</Link>
           )}
 
+
+          {/* Home Link */}
           <Link to="/HomePage" className="nav-link">Home</Link>
 
+          {/* Authentication Buttons */}
           <div className="auth-buttons">
-            <Link to="/signup" className="sign-up-btn">Sign up</Link>
-            <Link to="/Login" className="login-btn">Login</Link>
+            {!isLoggedIn ? (
+              <>
+                <Link to="/signup" className="sign-up-btn">Sign up</Link>
+                <Link to="/Login" className="login-btn">Login</Link>
+              </>
+            ) : (
+              <Link 
+                to="/Login" 
+                className="logout-btn"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = '/Login';
+                }}
+              >
+                Logout
+              </Link>
+            )}
           </div>
         </div>
       </nav>

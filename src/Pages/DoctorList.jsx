@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import '../assets/Doctorlist.css';
 import { getFirestore, collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { app } from "../config/firebase"; // Adjust path if needed
@@ -14,7 +14,7 @@ export default function Doctorlist() {
   const db = getFirestore(app);
 
   // Fetch all doctors from Firestore
-  const fetchDoctors = async () => {
+  const fetchDoctors = useCallback(async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "Doctors"));
       const doctorsList = querySnapshot.docs.map(doc => ({
@@ -22,27 +22,25 @@ export default function Doctorlist() {
         ...doc.data()
       }));
   
-      // Filter out the admin user by matching fullName, email, or any other relevant fields
       const filteredList = doctorsList.filter(doctor => {
-        // Filter based on email or other fields you want to check
         return doctor.email !== "admin@gmail.com" &&
                doctor.fullName !== "Admin User" &&
                doctor.Specialization !== "Monitor" &&
                doctor.about !== "I am responsible for managing and overseeing all administrative functions, including user registrations, appointment scheduling, and data updates, ensuring seamless operation and efficient healthcare service delivery.";
       });
   
-      setDoctors(filteredList); // Set all doctors excluding the admin
-      setFilteredDoctors(filteredList); // Initialize filtered doctors with all doctors except the admin
+      setDoctors(filteredList); 
+      setFilteredDoctors(filteredList); 
     } catch (error) {
       console.error("Error fetching doctors: ", error);
     }
-  };
+  }, [db]);
   
 
   // Fetch doctors on component mount
   useEffect(() => {
     fetchDoctors();
-  }, [db]);
+  }, [fetchDoctors]);
 
   // Handle search input change
   const handleSearchChange = (e) => {
