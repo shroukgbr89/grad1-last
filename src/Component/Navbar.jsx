@@ -20,21 +20,19 @@ export default function Navbar() {
         <div className="nav-links">
           {/* Appointments Dropdown */}
           <div className="dropdown">
-                <Link to="#" className="dropdown-link">Appointments</Link>
-                <div className="dropdown-content">
-                  <Link to="/ListAppointment" className="dropdown-item">List Appointments</Link>
-                  {!isAdmin && (
-                    <Link to="/Prescriptions" className="dropdown-item">Prescriptions</Link>
-                  )}
-        
-                </div>
-              </div>
-
+            <Link to="#" className="dropdown-link">Appointments</Link>
+            <div className="dropdown-content">
+              <Link to="/ListAppointment" className="dropdown-item">List Appointments</Link>
+              {!isAdmin && (
+                <Link to="/Prescriptions" className="dropdown-item">Prescriptions</Link>
+              )}
+            </div>
+          </div>
 
           {/* Doctors Dropdown (Admin only) */}
           {isAdmin && (
             <div className="dropdown">
-              <Link to="#" className="dropdown-link">Doctors</Link>
+              <Link to="#" className="dropdown-link">Manage Doctors</Link>
               <div className="dropdown-content">
                 <Link to="/DoctorList" className="dropdown-item">Doctor List</Link>
                 <Link to="/Add" className="dropdown-item">Add New Doctor</Link>
@@ -43,18 +41,21 @@ export default function Navbar() {
             </div>
           )}
 
-          {/* Profile Link (For Doctors) */}
-      {doctorId && (
-          <Link to="/Histories" className="nav-link">Patient Histories</Link>
-        )}
+          {/* Patient Histories - for both doctors and admins */}
+          {(doctorId || isAdmin) && (
+            <Link to="/Histories" className="nav-link">Patient Histories</Link>
+          )}
 
+          {/* My Profile (Doctors only) */}
           {doctorId && (
             <Link to={`/profile/${doctorId}`} className="nav-link">My Profile</Link>
           )}
 
-
           {/* Home Link */}
           <Link to="/HomePage" className="nav-link">Home</Link>
+          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/Contact" className="nav-link">Contact</Link>
+
 
           {/* Authentication Buttons */}
           <div className="auth-buttons">

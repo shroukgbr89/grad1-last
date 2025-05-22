@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import '../assets/signup.css';
-import img1 from '../assets/img/dd.jpg';
+import img1 from '../assets/img/s.png';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-import { app } from "../config/firebase"; // Adjust path if needed
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { app } from "../config/firebase"; 
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +18,7 @@ const Signup = () => {
 
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const navigate = useNavigate(); // Initialize navigate hook
+  const navigate = useNavigate(); 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,17 +45,15 @@ const Signup = () => {
       const userCredential = await createUserWithEmailAndPassword(auth,Email, password);
       const user = userCredential.user;
   
-      // Save user details to Firestore under /Doctors/
       await setDoc(doc(db, "Doctors", user.uid), {
         fullName: fullName,
-        Email: Email, // Save the normalized email to Firestore
-        password: password, // Store password in Firestore (not recommended for production)
+        Email: Email, 
+        password: password, 
       });
       setSuccess("Account created successfully!");
       console.log("User registered and stored in Firestore:", fullName, Email);
-      navigate('/Login'); // Redirect to Login page
+      navigate('/Login'); 
   
-      // Clear the form
       setFormData({
         fullName: '',
         Email: '',
@@ -69,7 +67,7 @@ const Signup = () => {
   };  
 
   return (
-    <div className="container">
+    <div className="container" >
       <div className="form-container">
         <h1>Sign Up</h1>
         <p>Enter your credentials to create your account</p>

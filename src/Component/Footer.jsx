@@ -7,59 +7,36 @@ export default function Footer() {
     <>
       <footer className="footer">
         <div className="footer-container">
-          <div className="footer-about">
-            <h4>About Us</h4>
-            <p>
-              Providing reliable and comprehensive healthcare solutions. <br />
-              Our mission is to improve lives through innovative <br />
-              medical technologies and exceptional patient care.
+          <div className="footer-brand">
+            <h2 className="footer-logo">Healt Care</h2>
+            <p className="footer-description">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             </p>
           </div>
 
-          <div className="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="/about-us">About Us</a></li>
-              <li><a href="/services">Services</a></li>
-              <li><a href="/contact">Contact</a></li>
-              <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <div className="footer-company">
+            <h4 className="footer-heading">COMPANY</h4>
+            <ul className="footer-list">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About us</a></li>
+              <li><a href="/contact">Contact us</a></li>
+              <li><a href="/privacy">Privacy policy</a></li>
             </ul>
           </div>
 
           <div className="footer-contact">
-            <h4>Contact Us</h4>
-            <p>
-              <i className="fas fa-envelope"></i>{' '}
-              <a href="mailto:info@medicalsystem.com">info@medicalsystem.com</a>
-            </p>
-            <p>
-              <i className="fas fa-phone"></i>{' '}
-              <a href="tel:+1234567890">+1 (234) 567-890</a>
-            </p>
-            <p>
-              <i className="fas fa-map-marker-alt"></i> 123 Health St, Wellness City, USA
-            </p>
-          </div>
-
-          <div className="footer-social">
-            <h4>Follow Us</h4>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook-f"></i> Facebook
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i> Twitter
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-linkedin-in"></i> LinkedIn
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i> Instagram
-            </a>
+            <h4 className="footer-heading">GET IN TOUCH</h4>
+            <ul className="footer-list">
+              <li><i className="fas fa-phone"></i> +1-212-456-7890</li>
+              <li><i className="fas fa-envelope"></i> greatstockdev@gmail.com</li>
+            </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; 2024 Medical System. All Rights Reserved.</p>
+          <p>Copyright © 2024 GreatStock - All Right Reserved.</p>
         </div>
       </footer>
     </>

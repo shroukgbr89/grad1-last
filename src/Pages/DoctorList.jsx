@@ -1,19 +1,31 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import '../assets/Doctorlist.css';
 import { getFirestore, collection, getDocs, doc, deleteDoc } from "firebase/firestore";
-import { app } from "../config/firebase"; // Adjust path if needed
-import { FaEye } from 'react-icons/fa'; // Import the view profile icon
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { app } from "../config/firebase";
+import { FaEye } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import docc from '../assets/img/q.jpg';
+
+const SPECIALISTS = [
+  "General",
+  "Dentist",
+  "Lungs Specialist",
+  "Cardio",
+  "Orthopedic",
+  "Cardiologist",
+  "Surgeon",
+  "psychiatrist"
+];
 
 export default function Doctorlist() {
-  const [doctors, setDoctors] = useState([]); // State to store all doctors
-  const [searchQuery, setSearchQuery] = useState(''); // State to manage search query
-  const [filteredDoctors, setFilteredDoctors] = useState([]); // State to store filtered doctors
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [doctors, setDoctors] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [selectedSpecialist, setSelectedSpecialist] = useState('');
+  const navigate = useNavigate();
 
   const db = getFirestore(app);
 
-  // Fetch all doctors from Firestore
   const fetchDoctors = useCallback(async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "Doctors"));
@@ -21,123 +33,140 @@ export default function Doctorlist() {
         id: doc.id,
         ...doc.data()
       }));
-  
+
       const filteredList = doctorsList.filter(doctor => {
         return doctor.email !== "admin@gmail.com" &&
-               doctor.fullName !== "Admin User" &&
-               doctor.Specialization !== "Monitor" &&
-               doctor.about !== "I am responsible for managing and overseeing all administrative functions, including user registrations, appointment scheduling, and data updates, ensuring seamless operation and efficient healthcare service delivery.";
+          doctor.fullName !== "Admin User" &&
+          doctor.Specialization !== "Monitor" &&
+          doctor.about !== "I am responsible for managing and overseeing all administrative functions, including user registrations, appointment scheduling, and data updates, ensuring seamless operation and efficient healthcare service delivery.";
       });
-  
-      setDoctors(filteredList); 
-      setFilteredDoctors(filteredList); 
+
+      setDoctors(filteredList);
+      setFilteredDoctors(filteredList);
     } catch (error) {
       console.error("Error fetching doctors: ", error);
     }
   }, [db]);
-  
 
-  // Fetch doctors on component mount
   useEffect(() => {
     fetchDoctors();
   }, [fetchDoctors]);
 
-  // Handle search input change
+  // Filter by specialist
+  const handleSpecialistClick = (specialist) => {
+    setSelectedSpecialist(specialist);
+    if (specialist === '') {
+      setFilteredDoctors(doctors);
+    } else {
+      setFilteredDoctors(
+        doctors.filter(doctor =>
+          doctor.Specialization &&
+          doctor.Specialization.toLowerCase().includes(specialist.toLowerCase())
+        )
+      );
+    }
+    setSearchQuery('');
+  };
+
+  // Search by name
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-
-    // Filter doctors locally based on the search query
-    const filtered = doctors.filter(doctor =>
-      doctor.fullName.toLowerCase().includes(query.toLowerCase())
+    setFilteredDoctors(
+      doctors.filter(doctor =>
+        doctor.fullName.toLowerCase().includes(query.toLowerCase()) &&
+        (selectedSpecialist === '' ||
+          (doctor.Specialization &&
+            doctor.Specialization.toLowerCase().includes(selectedSpecialist.toLowerCase())))
+      )
     );
-    setFilteredDoctors(filtered);
   };
 
-  // Function to handle view profile
   const handleViewProfile = (doctorId) => {
-    navigate(`/profile/${doctorId}`); // Navigate to the profile page with doctor ID
+    navigate(`/profile/${doctorId}`);
   };
 
-  // Function to handle delete
   const handleDelete = async (doctorId) => {
     try {
-      await deleteDoc(doc(db, "Doctors", doctorId)); // Delete document from Firestore
-      setDoctors(doctors.filter(doctor => doctor.id !== doctorId)); // Update local state
-      setFilteredDoctors(filteredDoctors.filter(doctor => doctor.id !== doctorId)); // Update filtered state
+      await deleteDoc(doc(db, "Doctors", doctorId));
+      setDoctors(doctors.filter(doctor => doctor.id !== doctorId));
+      setFilteredDoctors(filteredDoctors.filter(doctor => doctor.id !== doctorId));
       alert('Doctor deleted successfully!');
     } catch (error) {
       console.error("Error deleting doctor: ", error);
     }
   };
 
-  // Function to handle "ALL" button click
-  const handleAllClick = () => {
-    setSearchQuery(''); // Clear the search query
-    fetchDoctors(); // Re-fetch all doctors
-  };
-
   return (
-    <>
-      <section className="doctor-list">
-        <div className="controls">
-          <button
-            className="btn-all"
-            style={{ width: '80px', height: '50px' }}
-            onClick={handleAllClick} // Handle "ALL" button click
-          >
-            ALL
-          </button>
-          <input
-            type="text"
-            style={{ width: '170px', height: '52px', marginRight: "900px", marginTop: "8px" }}
-            placeholder="Search Doctor Name"
-            value={searchQuery}
-            onChange={handleSearchChange} // Handle search input change
-          />
-          <button
-            className="btn-add"
-            onClick={() => navigate('/add')} // Navigate to Add Doctor page
-            style={{ width: '300px', height: '40px' }}
-          >
-            Add Doctor
-          </button>
-        </div>
-        <div className="cards">
-          {filteredDoctors.map(doctor => (
-            <div className="card" key={doctor.id}>
-              <h2>{doctor.fullName}</h2>
-              <h5>{doctor.Specialization || "Not specified"}</h5> {/* Display specialization */}
-              <p>{doctor.about || "Not specified"}</p> {/* Display about */}
-              <p>Days Available: {doctor.Days && Array.isArray(doctor.Days) ? doctor.Days.join(', ') : 'No days specified'}</p>
-              <p>Start Time: {doctor.Start || "Not specified"}</p> {/* Display start time */}
-              <p>Visits: {doctor.Visits || "Not specified"}</p> {/* Display visits */}
-              <div className="actions">
-                <button
-                  className="edit"
-                  onClick={() => navigate(`/Edit/${doctor.id}`)} // Pass doctor.id dynamically
-                >
-                  Edit
-                </button>
-
-                <button
-                  className="delete"
-                  onClick={() => handleDelete(doctor.id)} // Handle delete
-                >
-                  Delete
-                </button>
-                {/* Add view profile icon */}
-                <button
-                  className="view-profile"
-                  onClick={() => handleViewProfile(doctor.id)} // Navigate to profile page
-                >
-                  <FaEye size={18} color="#6BC2E5" /> {/* Adjust size and color as needed */}
-                </button>
-              </div>
-            </div>
+    <section className="doctor-list-page">
+      <div className="doctor-list-header">
+        <h2>Browse through doctors specialist:</h2>
+      </div>
+      <div className="doctor-list-content">
+        <aside className="doctor-sidebar">
+          {SPECIALISTS.map((spec, idx) => (
+            <button
+              key={spec}
+              className={`sidebar-btn${selectedSpecialist === spec ? ' active' : ''}`}
+              onClick={() => handleSpecialistClick(spec)}
+            >
+              {spec}
+            </button>
           ))}
-        </div>
-      </section>
-    </>
+          <button
+            className={`sidebar-btn${selectedSpecialist === '' ? ' active' : ''}`}
+            onClick={() => handleSpecialistClick('')}
+          >
+            All
+          </button>
+        </aside>
+        <main className="doctor-main">
+          <div className="doctor-controls">
+           
+            <button
+              className="btn-add"
+              onClick={() => navigate('/add')}
+            >
+              Add Doctor
+            </button>
+          </div>
+          <div className="cards">
+            {filteredDoctors.map(doctor => (
+              <div className="card" key={doctor.id}>
+                <img src={docc} alt="Doctor" />
+
+                <div className="card-status">
+                  <span className="dot-available"></span>
+                  <span className="available-text">Available</span>
+                </div>
+                <h2>Dr. {doctor.fullName}</h2>
+                <h5>{doctor.Specialization || "Not specified"}</h5>
+                <p>{doctor.about || "Not specified"}</p>
+                <div className="actions">
+                  <button
+                    className="edit"
+                    onClick={() => navigate(`/Edit/${doctor.id}`)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="delete"
+                    onClick={() => handleDelete(doctor.id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="view-profile"
+                    onClick={() => handleViewProfile(doctor.id)}
+                  >
+                    <FaEye size={18} color="#6BC2E5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
+    </section>
   );
 }

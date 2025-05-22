@@ -13,6 +13,8 @@ const LoginPage = ({ onLogin }) => {
   const [message, setMessage] = useState({ text: '', type: '' });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  
+
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -41,6 +43,7 @@ const LoginPage = ({ onLogin }) => {
           localStorage.setItem('doctorId', userDoc.id);
           localStorage.setItem('doctorEmail', email);
           onLogin(email, userDoc.id);
+          
   
           // Immediate navigation after successful login
           navigate(isAdmin ? '/DoctorList' : '/appointments');
@@ -61,7 +64,7 @@ const LoginPage = ({ onLogin }) => {
   return (
     <div className="container">
       <div className="form-section">
-        <h1>Get Started Now</h1>
+        <h1 style={{color:"#2196f3"}}>Get Started Now</h1>
         <form onSubmit={handleLogin}>
           <label htmlFor="email">Email address</label>
           <input
@@ -83,7 +86,7 @@ const LoginPage = ({ onLogin }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button
+            <button style={{width:"50px", height:"55px" , marginLeft:"10px", backgroundColor:"white"}}
               type="button"
               className="toggle-password"
               onClick={togglePasswordVisibility}

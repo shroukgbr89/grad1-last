@@ -17,6 +17,8 @@ import Profile from "./Pages/Profile";
 import PatientReminders from "./Pages/PatientReminders";
 import ReminderForm from "./Pages/ReminderForm";
 import Prescriptions from "./Pages/Prescriptions";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
 import Histories from "./Pages/Histories"; // Import the new page
 
 // Error boundary component to catch and display errors
@@ -129,7 +131,16 @@ function MainRouter() {
         {
             path: "histories",
             element: <Histories />,
-          }
+        },
+        {
+            path: "About",
+            element: <About />,
+        },
+        {
+          path:"Contact",
+          element:<Contact/>
+        }
+
 
         // // Add Drugs page route
         // {
