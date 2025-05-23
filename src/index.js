@@ -19,7 +19,9 @@ import ReminderForm from "./Pages/ReminderForm";
 import Prescriptions from "./Pages/Prescriptions";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
-import Histories from "./Pages/Histories"; // Import the new page
+import Histories from "./Pages/Histories"; 
+import Blog from "./Pages/Blog"; 
+import Privacy from "./Pages/Privacy"; // Import the Drugs component
 
 // Error boundary component to catch and display errors
 class ErrorBoundary extends React.Component {
@@ -139,7 +141,16 @@ function MainRouter() {
         {
           path:"Contact",
           element:<Contact/>
+        },{
+          path:"Blog",
+          element:<Blog/>
+        },
+        {
+           path:"Privacy",
+          element:<Privacy/>
         }
+
+        
 
 
         // // Add Drugs page route

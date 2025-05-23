@@ -1,0 +1,194 @@
+/* General Body and Base Styles */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f0f2f5; /* Light background for the overall page */
+}
+
+/* Dental Blog Section */
+.dental-blog-section {
+    padding: 60px 0;
+    background-color: #f7f9fc; /* A slightly different light background for the section */
+}
+
+.dental-blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Padding on sides for smaller screens */
+}
+
+/* Header Section */
+.dental-blog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Align items to the bottom */
+    margin-bottom: 40px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 20px; /* Space between elements when wrapped */
+}
+
+.our-blogs-text {
+    font-size: 0.95rem;
+    color: #5b6b80; /* A darker grey */
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.dental-blog-title {
+    font-size: 2.8rem; /* Large title */
+    color: #1a202c; /* Darker text */
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 700;
+    max-width: 600px; /* Control width for multi-line title */
+}
+
+.see-more-blogs-btn {
+    background-color: #007bff; /* Primary blue button */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.see-more-blogs-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Blog Grid */
+.dental-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Adjust minmax for card width */
+    gap: 30px; /* Space between cards */
+}
+
+/* Individual Blog Card */
+.dental-blog-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.dental-blog-card:hover {
+    transform: translateY(-8px); /* Lift card on hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+}
+
+.card-image-wrapper {
+    width: 100%;
+    height: 220px; /* Fixed height for image */
+    overflow: hidden;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the area, cropping if necessary */
+    display: block;
+    transition: transform 0.4s ease; /* Smooth zoom on image */
+}
+
+.dental-blog-card:hover .card-image-wrapper img {
+    transform: scale(1.05); /* Zoom image on card hover */
+}
+
+.card-content {
+    padding: 25px;
+    flex-grow: 1; /* Allows content to expand to fill space */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1.45rem; /* Title size */
+    color: #2c3e50; /* Dark text for title */
+    margin-bottom: 15px;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+.card-excerpt {
+    font-size: 0.95rem;
+    color: #6a737f; /* Slightly lighter text for excerpt */
+    margin-bottom: 25px;
+    line-height: 1.6;
+    flex-grow: 1; /* Allows excerpt to take up available space */
+}
+
+.read-more-link {
+    color: #007bff; /* Primary blue for link */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.read-more-link:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .dental-blog-title {
+        font-size: 2.2rem;
+    }
+    .dental-blog-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust minmax for smaller screens */
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dental-blog-header {
+        flex-direction: column; /* Stack header elements */
+        align-items: flex-start; /* Align left */
+        margin-bottom: 30px;
+    }
+    .dental-blog-title {
+        font-size: 1.8rem;
+        max-width: 100%;
+    }
+    .see-more-blogs-btn {
+        margin-top: 15px; /* Space between title and button */
+        width: auto; /* Allow button to size naturally */
+        align-self: flex-start; /* Keep button aligned left */
+    }
+    .dental-blog-grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+        gap: 20px;
+    }
+    .dental-blog-container {
+        padding: 0 15px;
+    }
+    .dental-blog-section {
+        padding: 40px 0;
+    }
+    .card-image-wrapper {
+        height: 180px; 
+    }
+    .card-title {
+        font-size: 1.3rem;
+    }
+    .card-excerpt {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) { 
+    .dental-blog-grid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+

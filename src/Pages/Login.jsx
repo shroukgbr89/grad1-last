@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
 import '../assets/Login.css';
-import doctor from '../assets/img/login.webp';
+import doctor from '../assets/img/ss.jpg';
 import { app } from '../config/firebase';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -46,7 +46,7 @@ const LoginPage = ({ onLogin }) => {
           
   
           // Immediate navigation after successful login
-          navigate(isAdmin ? '/DoctorList' : '/appointments');
+      navigate(isAdmin ? '/DoctorList' : '/appointments');
         } else {
           setMessage({ text: 'Invalid password. Please try again.', type: 'error' });
         }
