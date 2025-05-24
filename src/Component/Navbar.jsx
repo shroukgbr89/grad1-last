@@ -68,6 +68,10 @@ export default function Navbar() {
               <Link to={`/profile/${doctorId}`} className="nav-link">My Profile</Link>
             )}
 
+            {isAdmin && (
+             <div><Link to="/Reports" className="nav-link">Dashboard</Link></div>
+            )}
+
             {/* Logout */}
             <Link 
               to="/Login" 

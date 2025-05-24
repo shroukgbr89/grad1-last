@@ -21,7 +21,8 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Histories from "./Pages/Histories"; 
 import Blog from "./Pages/Blog"; 
-import Privacy from "./Pages/Privacy"; // Import the Drugs component
+import Privacy from "./Pages/Privacy"; 
+import Reports from "./Pages/Reports"; 
 
 // Error boundary component to catch and display errors
 class ErrorBoundary extends React.Component {
@@ -148,6 +149,10 @@ function MainRouter() {
         {
            path:"Privacy",
           element:<Privacy/>
+        },
+        {
+           path:"Reports",
+          element:<Reports/>
         }
 
         
