@@ -23,7 +23,7 @@ import Histories from "./Pages/Histories";
 import Blog from "./Pages/Blog"; 
 import Privacy from "./Pages/Privacy"; 
 import Reports from "./Pages/Reports"; 
-
+import Chat from "./Pages/Chat"; // Import Chat component
 // Error boundary component to catch and display errors
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -153,8 +153,11 @@ function MainRouter() {
         {
            path:"Reports",
           element:<Reports/>
-        }
-
+        },
+        {
+        path: "Chat", // Corrected key
+        element: <Chat doctorId={doctorId} />, // Pass doctorId to Chat component
+        },
         
 
 

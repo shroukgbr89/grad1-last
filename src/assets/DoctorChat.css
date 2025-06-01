@@ -1,0 +1,102 @@
+.doctor-chat-container {
+  display: flex;
+  height: 100vh;
+}
+
+.patients-list {
+  width: 25%;
+  background: #f5f5f5;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.patients-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.patients-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.patients-list li {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.patients-list li:hover,
+.patients-list li.active {
+  background: #2196f3;
+  color: #fff;
+}
+
+.chat-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.chat-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background: #f9f9f9;
+}
+
+.message {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  max-width: 70%;
+}
+
+.message.sent {
+  background: #2196f3;
+  color: #fff;
+  margin-left: auto;
+}
+
+.message.received {
+  background: #e0e0e0;
+  color: #000;
+}
+
+.message-input-container {
+  display: flex;
+  gap: 10px;
+}
+
+.message-input-container input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.message-input-container button {
+  padding: 10px 20px;
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.message-input-container button:hover {
+  background: #1976d2;
+}

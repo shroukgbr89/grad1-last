@@ -123,12 +123,6 @@ const ListAppointment = ({ doctorId }) => {
                   >
                     Cancel
                   </button>
-                  {/* <button 
-                    className="prescribe-button" 
-                    onClick={() => handlePrescribe(appointment)}
-                  >
-                    Prescribe
-                  </button> */}
                 </td>
               </tr>
             ))}

@@ -10,28 +10,57 @@ import {
 } from 'firebase/firestore';
 import { app } from '../config/firebase';
 import '../assets/Prescribe.css';
+import drugsData from '../assets/Dataset/drugs.json'; // Import the JSON file
 
 const Prescribe = () => {
   const [patient, setPatient] = useState(null);
   const [drugName, setDrugName] = useState('');
   const [selectedTimes, setSelectedTimes] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  
   const timeOptions = [
-  '8 am', '9 am', '10 am', '11 am', '12 pm',
-  '1 pm', '2 pm', '3 pm', '4 pm', '5 pm',
-  '6 pm', '7 pm', '8 pm', '9 pm', '10 pm',
-  '11 pm', '12 am', '1 am', '2 am', '3 am',
-  '4 am', '5 am', '6 am', '7 am'
-];
+    '8 am', '9 am', '10 am', '11 am', '12 pm',
+    '1 pm', '2 pm', '3 pm', '4 pm', '5 pm',
+    '6 pm', '7 pm', '8 pm', '9 pm', '10 pm',
+    '11 pm', '12 am', '1 am', '2 am', '3 am',
+    '4 am', '5 am', '6 am', '7 am'
+  ];
 
   useEffect(() => {
     const selected = JSON.parse(localStorage.getItem('selectedPatient'));
     setPatient(selected);
   }, []);
 
+  // Load drug suggestions based on input
+  const loadSuggestions = (input) => {
+    if (input.length > 0) {
+      const filtered = drugsData.filter(drug => 
+        drug.drugName && drug.drugName.toLowerCase().startsWith(input.toLowerCase())
+      );
+      setSuggestions(filtered);
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleDrugNameChange = (e) => {
+    const value = e.target.value;
+    setDrugName(value);
+    loadSuggestions(value);
+  };
+
   const handleTimeChange = (time) => {
     setSelectedTimes((prev) =>
       prev.includes(time) ? prev.filter((t) => t !== time) : [...prev, time]
     );
+  };
+
+  const handleSuggestionClick = (drug) => {
+    setDrugName(drug.drugName);
+    setShowSuggestions(false);
   };
 
   const handleSubmit = async (e) => {
@@ -90,28 +119,42 @@ const Prescribe = () => {
     <div className="prescribe-container">
       <h2>Prescribe Medication for {patient.patientName}</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={drugName}
-          onChange={(e) => setDrugName(e.target.value)}
-          placeholder="Enter drug name..."
-          required
-        />
+        <div className="drug-input-container">
+          <input
+            type="text"
+            value={drugName}
+            onChange={handleDrugNameChange}
+            placeholder="Enter drug name..."
+            required
+            autoComplete="off"
+          />
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="suggestions-dropdown">
+              {suggestions.map((drug, index) => (
+                <li 
+                  key={index}
+                  onClick={() => handleSuggestionClick(drug)}
+                >
+                  {drug.drugName}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <div className="time-options">
           <label>Select times:</label>
           <div className="checkbox-grid">
             {timeOptions.map((time) => (
               <label key={time}>
-                  <input
-                    type="checkbox"
-                    value={time}
-                    checked={selectedTimes.includes(time)}
-                    onChange={() => handleTimeChange(time)}
-                  />
-                  <span>{time}</span>
-                  </label>
-
+                <input
+                  type="checkbox"
+                  value={time}
+                  checked={selectedTimes.includes(time)}
+                  onChange={() => handleTimeChange(time)}
+                />
+                <span>{time}</span>
+              </label>
             ))}
           </div>
         </div>
